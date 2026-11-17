@@ -1,667 +1,455 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Medicare | Jadwal Kunjungan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicare - Patient Appointment</title>
 
-<style>
-:root {
-  --navy:#123b5d;
-  --blue:#2477b8;
-  --teal:#20a89a;
-  --bg:#f3f7fa;
-  --ink:#193247;
-  --muted:#718596;
-  --white:#fff;
-  --line:#e2eaf0;
-}
+    <link rel="stylesheet" href="style.css">
 
-* {
-  box-sizing:border-box;
-}
-
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-
-header {
-  background:white;
-  padding:15px 6%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  border-bottom:1px solid var(--line);
-}
-
-.logo {
-  width:55px;
-  height:55px;
-  object-fit:contain;
-}
-
-header h1 {
-  margin:0;
-  color:var(--navy);
-}
-
-header p {
-  margin:4px 0 0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.container {
-  max-width:1100px;
-  margin:30px auto;
-  padding:0 20px;
-}
-
-h2 {
-  color:var(--navy);
-}
-
-.layout {
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:20px;
-}
-
-.card {
-  background:white;
-  padding:22px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  box-shadow:0 8px 25px rgba(0,0,0,.04);
-}
-
-.calendar-toolbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.calendar-toolbar h3 {
-  color:var(--navy);
-}
-
-button {
-  cursor:pointer;
-  border:0;
-  border-radius:9px;
-  padding:10px 14px;
-  background:var(--blue);
-  color:white;
-  font-weight:bold;
-}
-
-button:hover {
-  opacity:.85;
-}
-
-.secondary {
-  background:#edf4f8;
-  color:var(--navy);
-}
-
-.calendar-grid {
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:7px;
-}
-
-.weekday {
-  text-align:center;
-  padding:10px 0;
-  color:var(--muted);
-  font-weight:bold;
-}
-
-.day {
-  min-height:55px;
-  background:#f8fbfd;
-  color:var(--ink);
-  border:1px solid transparent;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:5px;
-}
-
-.day:hover {
-  background:#eaf5fc;
-}
-
-.day.selected {
-  background:var(--blue);
-  color:white;
-}
-
-.day.today {
-  border:1px solid var(--teal);
-}
-
-.day.has-event::after {
-  content:"";
-  width:6px;
-  height:6px;
-  background:var(--teal);
-  border-radius:50%;
-  margin-top:3px;
-}
-
-.day.selected.has-event::after {
-  background:white;
-}
-
-.note {
-  background:#eaf5fc;
-  padding:15px;
-  border-radius:12px;
-  margin-top:20px;
-  color:#426780;
-  line-height:1.5;
-}
-
-.appointment {
-  border:1px solid var(--line);
-  border-left:4px solid var(--blue);
-  border-radius:10px;
-  padding:13px;
-  margin-bottom:12px;
-}
-
-.appointment h4 {
-  margin:0 0 8px;
-}
-
-.appointment p {
-  color:var(--muted);
-  font-size:13px;
-  margin:5px 0;
-}
-
-.form-card {
-  margin-top:20px;
-}
-
-.form-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.field {
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.field.full {
-  grid-column:1/-1;
-}
-
-label {
-  font-weight:bold;
-  font-size:13px;
-}
-
-input,textarea,select {
-  padding:12px;
-  border:1px solid #d6e1e9;
-  border-radius:9px;
-  width:100%;
-  font:inherit;
-}
-
-textarea {
-  min-height:75px;
-}
-
-.form-actions {
-  margin-top:15px;
-  display:flex;
-  gap:10px;
-}
-
-.danger {
-  background:#fff0f1;
-  color:#d95362;
-}
-
-.empty {
-  padding:20px;
-  background:#f8fbfd;
-  border-radius:10px;
-  text-align:center;
-  color:var(--muted);
-}
-
-@media(max-width:750px) {
-  .layout {
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:500px) {
-  .form-grid {
-    grid-template-columns:1fr;
-  }
-
-  .field.full {
-    grid-column:auto;
-  }
-
-  .day {
-    min-height:45px;
-    padding:3px;
-  }
-
-  .calendar-grid {
-    gap:3px;
-  }
-}
-</style>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-  <img src="medicare-logo.png" class="logo"
-       alt="Medicare Logo"
-       onerror="this.style.display='none'">
+<div class="app-container">
 
-  <div>
-    <h1>Medicare</h1>
-    <p>Sistem Manajemen Janji Temu Medis</p>
-  </div>
-</header>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-<main class="container">
+        <div class="brand">
+            <img src="./medicare-logo.png" alt="Medicare Logo">
+            <div>
+                <h2>Medicare</h2>
+                <span>Healthcare Platform</span>
+            </div>
+        </div>
 
-<h2>Jadwal Kunjungan</h2>
-<p>Atur jadwal konsultasi dan kontrol kesehatan.</p>
+        <div class="menu-label">MENU UTAMA</div>
 
-<div class="layout">
+        <nav class="navigation">
+            <a href="#dashboard" class="nav-item active">
+                <span>▦</span> Dashboard
+            </a>
 
-<section class="card">
+            <a href="#appointments" class="nav-item">
+                <span>▣</span> Janji Temu
+            </a>
 
-  <div class="calendar-toolbar">
-    <h3 id="monthTitle"></h3>
+            <a href="#doctors" class="nav-item">
+                <span>♙</span> Dokter
+            </a>
 
-    <div>
-      <button class="secondary" onclick="changeMonth(-1)">‹</button>
-      <button class="secondary" onclick="changeMonth(1)">›</button>
-    </div>
-  </div>
+            <a href="#schedule" class="nav-item">
+                <span>◷</span> Jadwal Kontrol
+            </a>
 
-  <div class="calendar-grid" id="calendar"></div>
+            <a href="#history" class="nav-item">
+                <span>▤</span> Riwayat
+            </a>
+        </nav>
 
-  <div class="note">
-    Pilih tanggal pada kalender untuk melihat jadwal.
-    Tanggal yang memiliki janji temu akan ditandai titik.
-  </div>
+        <div class="menu-label">PENGATURAN</div>
 
-</section>
+        <nav class="navigation">
+            <a href="#profile" class="nav-item">
+                <span>⚙</span> Profil Saya
+            </a>
 
-<section class="card">
+            <a href="#help" class="nav-item">
+                <span>?</span> Bantuan
+            </a>
+        </nav>
 
-  <h3>Daftar Janji Temu</h3>
-  <p id="selectedDateLabel"></p>
+        <div class="sidebar-bottom">
+            <div class="support-card">
+                <div class="support-icon">✚</div>
+                <h4>Butuh Bantuan?</h4>
+                <p>Hubungi layanan bantuan Medicare.</p>
+                <a href="#help">Hubungi Kami</a>
+            </div>
 
-  <div id="appointmentList"></div>
+            <div class="user-profile">
+                <div class="avatar">AP</div>
+                <div>
+                    <strong>Azril Putra</strong>
+                    <small>Pasien</small>
+                </div>
+                <span class="profile-menu">⋮</span>
+            </div>
+        </div>
 
-  <button onclick="enableNotifications()">
-    Aktifkan Notifikasi
-  </button>
+    </aside>
 
-</section>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="dashboard">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div class="welcome">
+                <h1>Dashboard</h1>
+                <p>Selamat datang kembali di Medicare 👋</p>
+            </div>
+
+            <div class="topbar-right">
+                <button class="notification-button" aria-label="Notifikasi">
+                    ♧
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="header-profile">
+                    <div class="avatar">AP</div>
+                    <div>
+                        <strong>Azril Putra</strong>
+                        <small>Pasien</small>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+        <section class="hero-section">
+
+            <div class="hero-text">
+                <span class="hero-label">MEDICARE HEALTHCARE</span>
+
+                <h2>Jaga Kesehatan,<br>
+                    Atur Jadwal Lebih Mudah.</h2>
+
+                <p>
+                    Kelola janji temu dan jadwal kontrol dokter
+                    dengan lebih praktis melalui Medicare.
+                </p>
+
+                <a href="#appointments" class="primary-button">
+                    Buat Janji Temu →
+                </a>
+            </div>
+
+            <div class="hero-decoration">
+                <div class="medical-circle">
+                    <span>✚</span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+        <section class="statistics">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">▣</div>
+                <div>
+                    <p>Total Janji Temu</p>
+                    <h2>12</h2>
+                    <small>Seluruh jadwal</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <div>
+                    <p>Janji Selesai</p>
+                    <h2>08</h2>
+                    <small>Sudah terlaksana</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">◷</div>
+                <div>
+                    <p>Menunggu</p>
+                    <h2>03</h2>
+                    <small>Belum terlaksana</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">♙</div>
+                <div>
+                    <p>Dokter</p>
+                    <h2>05</h2>
+                    <small>Dokter tersedia</small>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- APPOINTMENT AND CALENDAR -->
+        <section class="content-grid">
+
+            <!-- APPOINTMENT -->
+            <div class="content-card appointment-card" id="appointments">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Janji Temu Berikutnya</h3>
+                        <p>Informasi jadwal konsultasi Anda</p>
+                    </div>
+
+                    <a href="#schedule" class="text-link">Lihat Semua</a>
+                </div>
+
+                <div class="appointment-detail">
+
+                    <div class="doctor-avatar">👨‍⚕️</div>
+
+                    <div class="doctor-info">
+                        <h4>Dr. Andi Pratama</h4>
+                        <p>Dokter Umum</p>
+                        <span>RS Sehat Sentosa</span>
+                    </div>
+
+                    <span class="status-badge waiting">
+                        Menunggu
+                    </span>
+
+                </div>
+
+                <div class="appointment-info">
+
+                    <div class="info-item">
+                        <span>▣</span>
+                        <div>
+                            <small>Tanggal</small>
+                            <strong>20 November 2026</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <span>◷</span>
+                        <div>
+                            <small>Waktu</small>
+                            <strong>09:00 WIB</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <span>⌖</span>
+                        <div>
+                            <small>Lokasi</small>
+                            <strong>Ruang Pemeriksaan 02</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="appointment-actions">
+                    <a href="#schedule" class="primary-button">
+                        Ubah Jadwal
+                    </a>
+
+                    <a href="#history" class="secondary-button">
+                        Detail
+                    </a>
+                </div>
+
+            </div>
+
+
+            <!-- CALENDAR -->
+            <div class="content-card calendar-card" id="schedule">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Kalender Jadwal</h3>
+                        <p>Pantau jadwal konsultasi Anda</p>
+                    </div>
+
+                    <span class="calendar-year">2026</span>
+                </div>
+
+                <div class="calendar-header">
+                    <button aria-label="Bulan sebelumnya">‹</button>
+                    <strong>November 2026</strong>
+                    <button aria-label="Bulan berikutnya">›</button>
+                </div>
+
+                <div class="calendar-grid">
+
+                    <span class="day-name">Min</span>
+                    <span class="day-name">Sen</span>
+                    <span class="day-name">Sel</span>
+                    <span class="day-name">Rab</span>
+                    <span class="day-name">Kam</span>
+                    <span class="day-name">Jum</span>
+                    <span class="day-name">Sab</span>
+
+                    <span class="muted-day">26</span>
+                    <span class="muted-day">27</span>
+                    <span class="muted-day">28</span>
+                    <span class="muted-day">29</span>
+                    <span class="muted-day">30</span>
+                    <span class="muted-day">31</span>
+                    <span>1</span>
+
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+
+                    <span>9</span>
+                    <span>10</span>
+                    <span>11</span>
+                    <span>12</span>
+                    <span>13</span>
+                    <span>14</span>
+                    <span>15</span>
+
+                    <span>16</span>
+                    <span>17</span>
+                    <span>18</span>
+                    <span>19</span>
+                    <span class="selected-day">20</span>
+                    <span>21</span>
+                    <span>22</span>
+
+                    <span>23</span>
+                    <span>24</span>
+                    <span>25</span>
+                    <span>26</span>
+                    <span>27</span>
+                    <span>28</span>
+                    <span>29</span>
+
+                    <span>30</span>
+                    <span class="muted-day">1</span>
+                    <span class="muted-day">2</span>
+                    <span class="muted-day">3</span>
+                    <span class="muted-day">4</span>
+                    <span class="muted-day">5</span>
+                    <span class="muted-day">6</span>
+
+                </div>
+
+                <div class="calendar-legend">
+                    <span><i class="legend-blue"></i> Jadwal Kontrol</span>
+                    <span><i class="legend-gray"></i> Hari Lainnya</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DOCTORS -->
+        <section class="content-card doctors-section" id="doctors">
+
+            <div class="section-heading">
+                <div>
+                    <h3>Dokter Tersedia</h3>
+                    <p>Pilih dokter sesuai kebutuhan kesehatan Anda</p>
+                </div>
+
+                <a href="#appointments" class="text-link">Lihat Semua</a>
+            </div>
+
+            <div class="doctor-grid">
+
+                <div class="doctor-card">
+                    <div class="doctor-image">👨‍⚕️</div>
+                    <h4>Dr. Andi Pratama</h4>
+                    <p>Dokter Umum</p>
+                    <span class="availability">● Tersedia</span>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-image">👩‍⚕️</div>
+                    <h4>Dr. Siti Rahma</h4>
+                    <p>Dokter Anak</p>
+                    <span class="availability">● Tersedia</span>
+                </div>
+
+                <div class="doctor-card">
+                    <div class="doctor-image">👨‍⚕️</div>
+                    <h4>Dr. Budi Santoso</h4>
+                    <p>Dokter Gigi</p>
+                    <span class="availability">● Tersedia</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+        <section class="content-card history-section" id="history">
+
+            <div class="section-heading">
+                <div>
+                    <h3>Riwayat Janji Temu</h3>
+                    <p>Daftar aktivitas konsultasi Anda</p>
+                </div>
+
+                <a href="#history" class="text-link">Lihat Riwayat</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dokter</th>
+                            <th>Spesialisasi</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Dr. Andi Pratama</td>
+                            <td>Dokter Umum</td>
+                            <td>20 Nov 2026</td>
+                            <td>09:00</td>
+                            <td><span class="status-badge waiting">Menunggu</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Dr. Siti Rahma</td>
+                            <td>Dokter Anak</td>
+                            <td>12 Nov 2026</td>
+                            <td>10:00</td>
+                            <td><span class="status-badge completed">Selesai</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Dr. Budi Santoso</td>
+                            <td>Dokter Gigi</td>
+                            <td>05 Nov 2026</td>
+                            <td>13:00</td>
+                            <td><span class="status-badge completed">Selesai</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>© 2026 Medicare. All Rights Reserved.</p>
+            <p>Healthcare Made Easier.</p>
+        </footer>
+
+    </main>
 
 </div>
 
-<section class="card form-card">
-
-  <h3 id="formTitle">Tambah Janji Temu</h3>
-
-  <form id="appointmentForm">
-
-    <div class="form-grid">
-
-      <div class="field">
-        <label>Nama Pasien</label>
-        <input id="patient" required>
-      </div>
-
-      <div class="field">
-        <label>Nama Dokter</label>
-        <input id="doctor" required>
-      </div>
-
-      <div class="field">
-        <label>Tanggal Kunjungan</label>
-        <input type="date" id="date" required>
-      </div>
-
-      <div class="field">
-        <label>Jam Kunjungan</label>
-        <input type="time" id="time" required>
-      </div>
-
-      <div class="field">
-        <label>Poli / Klinik</label>
-        <input id="clinic">
-      </div>
-
-      <div class="field">
-        <label>Pengingat</label>
-        <select id="remind">
-          <option value="60">1 jam sebelumnya</option>
-          <option value="1440">1 hari sebelumnya</option>
-          <option value="30">30 menit sebelumnya</option>
-          <option value="0">Tanpa pengingat</option>
-        </select>
-      </div>
-
-      <div class="field full">
-        <label>Catatan</label>
-        <textarea id="notes"></textarea>
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button type="submit">Simpan Jadwal</button>
-      <button type="button" class="secondary"
-              onclick="resetForm()">Batal</button>
-    </div>
-
-  </form>
-
-  <p id="status"></p>
-
-</section>
-
-</main>
-
-<script>
-const monthNames = [
-  "Januari","Februari","Maret","April",
-  "Mei","Juni","Juli","Agustus",
-  "September","Oktober","November","Desember"
-];
-
-let currentDate = new Date();
-let selectedDate = getDateKey(new Date());
-let editingId = null;
-
-let appointments = JSON.parse(
-  localStorage.getItem("medicareAppointments") || "[]"
-);
-
-let notified = new Set();
-
-function getDateKey(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth()+1).padStart(2,"0");
-  const d = String(date.getDate()).padStart(2,"0");
-  return `${y}-${m}-${d}`;
-}
-
-function saveData() {
-  localStorage.setItem(
-    "medicareAppointments",
-    JSON.stringify(appointments)
-  );
-}
-
-function changeMonth(amount) {
-  currentDate.setMonth(currentDate.getMonth()+amount);
-  renderCalendar();
-}
-
-function renderCalendar() {
-  const calendar = document.getElementById("calendar");
-
-  calendar.innerHTML = `
-    <div class="weekday">Min</div>
-    <div class="weekday">Sen</div>
-    <div class="weekday">Sel</div>
-    <div class="weekday">Rab</div>
-    <div class="weekday">Kam</div>
-    <div class="weekday">Jum</div>
-    <div class="weekday">Sab</div>
-  `;
-
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-
-  document.getElementById("monthTitle").textContent =
-    `${monthNames[month]} ${year}`;
-
-  const firstDay = new Date(year,month,1).getDay();
-  const totalDays = new Date(year,month+1,0).getDate();
-  const today = getDateKey(new Date());
-
-  for(let i=0;i<firstDay;i++) {
-    calendar.innerHTML += `<div></div>`;
-  }
-
-  for(let day=1;day<=totalDays;day++) {
-    const key = getDateKey(new Date(year,month,day));
-
-    const hasEvent = appointments.some(
-      a => a.date === key
-    );
-
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "day";
-
-    if(key === selectedDate) button.classList.add("selected");
-    if(key === today) button.classList.add("today");
-    if(hasEvent) button.classList.add("has-event");
-
-    button.textContent = day;
-
-    button.onclick = () => {
-      selectedDate = key;
-      document.getElementById("date").value = key;
-      renderCalendar();
-      renderAppointments();
-    };
-
-    calendar.appendChild(button);
-  }
-}
-
-function renderAppointments() {
-  const list = document.getElementById("appointmentList");
-
-  document.getElementById("selectedDateLabel").textContent =
-    new Date(selectedDate+"T12:00:00").toLocaleDateString("id-ID", {
-      day:"numeric",month:"long",year:"numeric"
-    });
-
-  list.innerHTML = "";
-
-  const items = appointments
-    .filter(a => a.date === selectedDate)
-    .sort((a,b) => a.time.localeCompare(b.time));
-
-  if(items.length === 0) {
-    list.innerHTML =
-      '<div class="empty">Belum ada janji temu.</div>';
-    return;
-  }
-
-  items.forEach(a => {
-    const div = document.createElement("div");
-    div.className = "appointment";
-
-    const title = document.createElement("h4");
-    title.textContent = `${a.time} - ${a.patient}`;
-
-    const doctor = document.createElement("p");
-    doctor.textContent = `Dokter: ${a.doctor}`;
-
-    const clinic = document.createElement("p");
-    clinic.textContent = `Poli: ${a.clinic || "-"}`;
-
-    const edit = document.createElement("button");
-    edit.textContent = "Ubah";
-    edit.className = "secondary";
-    edit.onclick = () => editAppointment(a.id);
-
-    const del = document.createElement("button");
-    del.textContent = "Hapus";
-    del.className = "danger";
-    del.onclick = () => deleteAppointment(a.id);
-
-    div.append(title,doctor,clinic,edit,del);
-    list.appendChild(div);
-  });
-}
-
-function editAppointment(id) {
-  const a = appointments.find(x => x.id === id);
-  if(!a) return;
-
-  editingId = id;
-
-  patient.value = a.patient;
-  doctor.value = a.doctor;
-  date.value = a.date;
-  time.value = a.time;
-  clinic.value = a.clinic || "";
-  remind.value = String(a.remind);
-  notes.value = a.notes || "";
-
-  selectedDate = a.date;
-  currentDate = new Date(a.date+"T12:00:00");
-
-  document.getElementById("formTitle").textContent =
-    "Ubah Janji Temu";
-
-  renderCalendar();
-  renderAppointments();
-
-  document.querySelector(".form-card").scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-function deleteAppointment(id) {
-  if(!confirm("Hapus janji temu ini?")) return;
-
-  appointments = appointments.filter(a => a.id !== id);
-
-  saveData();
-  renderCalendar();
-  renderAppointments();
-}
-
-function resetForm() {
-  document.getElementById("appointmentForm").reset();
-  editingId = null;
-  document.getElementById("formTitle").textContent =
-    "Tambah Janji Temu";
-  document.getElementById("date").value = selectedDate;
-}
-
-document.getElementById("appointmentForm")
-.addEventListener("submit",function(e) {
-  e.preventDefault();
-
-  const item = {
-    id: editingId || Date.now().toString(),
-    patient: patient.value.trim(),
-    doctor: doctor.value.trim(),
-    date: date.value,
-    time: time.value,
-    clinic: clinic.value.trim(),
-    remind: Number(remind.value),
-    notes: notes.value.trim()
-  };
-
-  if(editingId) {
-    appointments = appointments.map(a =>
-      a.id === editingId ? item : a
-    );
-  } else {
-    appointments.push(item);
-  }
-
-  selectedDate = item.date;
-  currentDate = new Date(item.date+"T12:00:00");
-
-  saveData();
-  resetForm();
-  renderCalendar();
-  renderAppointments();
-
-  document.getElementById("status").textContent =
-    "Jadwal berhasil disimpan.";
-});
-
-async function enableNotifications() {
-  if(!("Notification" in window)) {
-    alert("Browser tidak mendukung notifikasi.");
-    return;
-  }
-
-  const permission = await Notification.requestPermission();
-
-  if(permission === "granted") {
-    new Notification("Medicare",{
-      body:"Notifikasi pengingat berhasil diaktifkan."
-    });
-  } else {
-    alert("Izin notifikasi belum diberikan.");
-  }
-}
-
-function checkReminders() {
-  if(!("Notification" in window) ||
-     Notification.permission !== "granted") return;
-
-  const now = Date.now();
-
-  appointments.forEach(a => {
-    if(!a.remind) return;
-
-    const target = new Date(
-      `${a.date}T${a.time}:00`
-    ).getTime() - a.remind*60000;
-
-    const key = `${a.id}-${target}`;
-
-    if(target <= now && target > now-60000 &&
-       !notified.has(key)) {
-
-      new Notification("Pengingat Janji Temu Medicare",{
-        body:`${a.patient} memiliki janji dengan ${a.doctor} pada pukul ${a.time}.`
-      });
-
-      notified.add(key);
-    }
-  });
-}
-
-document.getElementById("date").value = selectedDate;
-
-renderCalendar();
-renderAppointments();
-
-setInterval(checkReminders,15000);
-checkReminders();
-</script>
-
 </body>
 </html>
+
