@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicare | Sistem Manajemen Janji Temu Medis</title>
+<style>
+:root{--navy:#123b5d;--blue:#2477b8;--teal:#20a89a;--bg:#f3f7fa;--ink:#193247;--muted:#718596;--line:#e2eaf0;--white:#fff;--red:#d95362;--amber:#d58a24;--green:#168777}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+.login-wrap{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:#fff}.login-visual{background:linear-gradient(145deg,#103653,#176b91 62%,#21a89a);color:#fff;padding:7vw;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.login-visual:before,.login-visual:after{content:"";position:absolute;border:1px solid #ffffff25;border-radius:50%;width:430px;height:430px;right:-150px;top:10%}.login-visual:after{width:600px;height:600px;right:-230px;top:0}.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:850;letter-spacing:-.6px;position:relative;z-index:1}.logo{width:54px;height:48px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;padding:3px;overflow:hidden;flex:0 0 auto}.logo img{display:block;width:100%;height:100%;object-fit:contain}.visual-copy{max-width:490px;position:relative;z-index:1}.visual-copy .eyebrow{color:#a8e9e7}.visual-copy h1{font-size:clamp(34px,4.5vw,58px);line-height:1.08;letter-spacing:-1.8px;margin:15px 0}.visual-copy p{color:#d3e9f1;line-height:1.7;max-width:440px}.visual-points{display:grid;gap:13px;margin-top:28px}.visual-points div{display:flex;gap:11px;align-items:center;color:#e4f3f7;font-size:14px}.check{width:24px;height:24px;border-radius:50%;background:#ffffff20;display:grid;place-items:center}.visual-foot{color:#c4dce5;font-size:12px;position:relative;z-index:1}
+.login-side{display:flex;align-items:center;justify-content:center;padding:35px}.login-card{width:min(420px,100%)}.login-card h2{font-size:29px;color:var(--navy);margin:0 0 8px}.login-card>p{color:var(--muted);margin:0 0 27px;font-size:14px}.eyebrow{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;font-weight:800;color:var(--blue)}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}.field label{font-size:13px;font-weight:750;color:#435d70}.field input,.field select,.field textarea{width:100%;border:1px solid #dce6ed;border-radius:10px;padding:12px 13px;background:#fff;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2477b81a}.field textarea{min-height:90px;resize:vertical}.password-wrap{position:relative}.password-wrap input{padding-right:48px}.toggle-pass{position:absolute;right:9px;top:8px;background:transparent;color:var(--muted);padding:5px}.btn{padding:11px 16px;border-radius:10px;font-weight:750;transition:.18s}.primary{background:var(--blue);color:#fff}.primary:hover{background:#155f98}.soft{background:#eaf5fc;color:var(--blue)}.success{background:#e8f7f3;color:var(--green)}.danger{background:#fff0f1;color:var(--red)}.outline{background:#fff;border:1px solid var(--line);color:var(--ink)}.full{width:100%}.demo-box{margin-top:19px;padding:13px 14px;border:1px dashed #cbdde8;border-radius:11px;background:#f7fbfd;font-size:12px;color:#637b8b;line-height:1.6}.demo-box b{color:var(--navy)}.error{font-size:12px;color:var(--red);min-height:17px;margin-top:8px}
+.app-header{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1160px)/2));position:sticky;top:0;z-index:5}.app-header .brand{color:var(--navy);font-size:21px}.app-header .logo{width:47px;height:42px;border-radius:10px}.user-area{display:flex;align-items:center;gap:12px}.user-meta{text-align:right}.user-meta b{display:block;font-size:13px}.user-meta small{color:var(--muted);font-size:11px}.avatar{width:37px;height:37px;border-radius:50%;background:#d9edf8;color:var(--navy);display:grid;place-items:center;font-weight:850}.logout{background:#f2f6f9;color:#526a7b;padding:9px 12px;border-radius:9px;font-weight:700;font-size:12px}
+main{max-width:1160px;margin:30px auto;padding:0 22px}.welcome{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:22px}.welcome h1{font-size:28px;margin:6px 0;color:var(--navy);letter-spacing:-.7px}.welcome p{margin:0;color:var(--muted);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:19px}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:15px}.stat{padding:17px}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{width:34px;height:34px;border-radius:10px;background:#eaf5fc;display:grid;place-items:center}.stat strong{display:block;font-size:27px;color:var(--navy);margin-top:10px}.content-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:17px}.panel{padding:19px;margin-bottom:17px}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.panel h2{font-size:16px;color:var(--navy);margin:0}.muted{font-size:12px;color:var(--muted)}.appointment{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px}.appointment:last-child{margin-bottom:0}.appt-left{display:flex;gap:11px;align-items:center;min-width:0}.doc-icon{width:41px;height:41px;flex:0 0 41px;border-radius:12px;background:#eaf5fc;display:grid;place-items:center;font-size:20px}.appt-name{font-weight:800;font-size:13px}.appt-meta{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}.status{font-size:10px;font-weight:850;padding:6px 8px;border-radius:20px;display:inline-block;margin-top:7px}.pending{background:#fff5e6;color:#a96a0c}.accepted{background:#e8f7f3;color:#168777}.rejected{background:#fff0f1;color:#c23f4d}.completed{background:#edf0f4;color:#586b7b}.row-actions{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}.row-actions .btn{padding:8px 10px;font-size:11px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick button{padding:12px 10px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:left;color:var(--ink);font-weight:750;font-size:12px}.quick button span{display:block;font-size:20px;margin-bottom:6px}.quick button small{display:block;color:var(--muted);font-weight:400;margin-top:3px;font-size:10px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:11px}.calendar div{padding:8px 1px;border-radius:7px}.calendar .day{color:var(--muted);font-weight:800}.calendar .today{background:var(--blue);color:white;font-weight:850}.calendar .has{background:#eaf5fc;color:var(--blue);font-weight:850}.notice{background:#eef7fc;border:1px solid #d8ebf7;color:#42677f;padding:11px 12px;border-radius:10px;font-size:11px;line-height:1.55;margin-top:13px}.empty{text-align:center;padding:22px;color:var(--muted);font-size:12px}.history-item{border-left:3px solid #b9dced;padding:2px 0 12px 12px;margin-left:4px;margin-bottom:8px}.history-item strong{font-size:12px}.history-item p{font-size:11px;color:var(--muted);margin:4px 0;line-height:1.5}.modal-backdrop{position:fixed;inset:0;background:#102b405c;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-backdrop.show{display:flex}.modal{background:#fff;border-radius:16px;padding:22px;width:min(520px,100%);max-height:90vh;overflow:auto;box-shadow:0 22px 70px #0b2b452e}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modal-head h2{margin:0;color:var(--navy);font-size:19px}.close{background:#f0f4f7;border-radius:8px;width:31px;height:31px;font-size:19px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tabs{display:flex;gap:7px;flex-wrap:wrap}.tab{padding:7px 10px;border-radius:8px;background:#f1f5f8;color:#587184;font-size:11px;font-weight:750}.tab.active{background:#eaf5fc;color:var(--blue)}footer{text-align:center;color:#8a9aa7;font-size:11px;padding:13px 0 30px}
+@media(max-width:820px){.login-wrap{grid-template-columns:1fr}.login-visual{display:none}.login-side{min-height:100vh}.content-grid{grid-template-columns:1fr}.welcome{flex-direction:column}.app-header{padding:0 16px}}
+@media(max-width:540px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:span 2}.appointment{align-items:flex-start;flex-direction:column}.row-actions{justify-content:flex-start}.form-grid{grid-template-columns:1fr}.user-meta{display:none}.welcome h1{font-size:24px}main{margin-top:22px}.login-side{padding:24px}}
+
+/* Medicare feature additions */
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.feature-panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px;min-width:0}.feature-panel h2{font-size:16px;color:var(--navy);margin:0}.feature-panel .panel-title{margin-bottom:13px}.search-row{display:flex;gap:8px;margin-bottom:12px}.search-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px}.doctor-card,.message-item,.notification-item,.record-card{border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:9px}.doctor-card{display:flex;align-items:center;justify-content:space-between;gap:10px}.doctor-card:last-child,.message-item:last-child,.notification-item:last-child,.record-card:last-child{margin-bottom:0}.doctor-info{display:flex;gap:10px;align-items:center;min-width:0}.doctor-avatar{width:38px;height:38px;border-radius:12px;background:#eaf5fc;display:grid;place-items:center;font-size:19px;flex-shrink:0}.doctor-info b,.record-card b{font-size:12px;display:block}.doctor-info small,.record-card small{font-size:11px;color:var(--muted)}.feature-panel input,.feature-panel textarea,.feature-panel select{border:1px solid var(--line);border-radius:9px;padding:10px;width:100%;color:var(--ink);background:#fff}.feature-panel textarea{min-height:65px;resize:vertical}.chat-box{height:205px;overflow:auto;border:1px solid var(--line);border-radius:11px;padding:10px;background:#f8fbfd;margin-bottom:9px}.chat-bubble{max-width:85%;padding:9px 11px;border-radius:11px;background:#eaf1f6;font-size:12px;margin:6px 0;line-height:1.5;overflow-wrap:anywhere}.chat-bubble.mine{margin-left:auto;background:#e3f4ef}.chat-bubble small{display:block;color:var(--muted);font-size:9px;margin-top:4px}.chat-compose{display:flex;gap:7px}.chat-compose input{flex:1;min-width:0}.notification-item{display:flex;gap:9px;align-items:flex-start}.notification-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0}.notification-item p{font-size:11px;margin:0;line-height:1.5}.notification-item small{color:var(--muted);font-size:10px}.feature-empty{padding:17px;text-align:center;color:var(--muted);font-size:12px}.feature-note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:10px}.feature-actions{display:flex;gap:7px;flex-wrap:wrap}.feature-actions .btn{font-size:11px;padding:8px 10px}
+@media(max-width:820px){.feature-grid{grid-template-columns:1fr}}
+
+.reschedule-hint{font-size:11px;color:var(--muted);line-height:1.5;margin-top:8px}
+#rescheduleModal .notice{margin-top:10px}
+
+
+.calendar-toolbar{display:flex;align-items:center;gap:8px}
+.calendar-nav{width:30px;height:30px;border:0;border-radius:8px;background:#eef5f9;color:var(--navy);font-size:20px;line-height:1;cursor:pointer}
+.calendar-nav:hover{background:#dceefa}
+.calendar .calendar-date{border:0;background:transparent;color:var(--ink);width:100%;min-height:34px;padding:7px 1px;border-radius:8px;font-size:12px;cursor:pointer;position:relative;touch-action:manipulation}
+.calendar .calendar-date:hover{background:#eaf5fc}
+.calendar .calendar-date:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+.calendar .calendar-date.today{background:var(--blue);color:#fff;font-weight:850}
+.calendar .calendar-date.has{background:#eaf5fc;color:var(--blue);font-weight:850}
+.calendar .calendar-date.selected{outline:2px solid var(--teal);outline-offset:-2px}
+.calendar .calendar-date.has:after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:var(--teal);bottom:3px;left:calc(50% - 2px)}
+.calendar .calendar-date.today:after{background:#fff}
+.calendar-detail{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.calendar-detail h3{font-size:12px;color:var(--navy);margin:0 0 8px}
+.calendar-event{padding:9px 10px;border:1px solid var(--line);border-radius:9px;margin-top:7px;font-size:11px;line-height:1.5}
+.calendar-event b{display:block;color:var(--navy)}
+
+</style>
+</head>
+<body>
+<section id="loginScreen" class="login-wrap">
+ <div class="login-visual">
+  <div class="brand"><div class="logo"><img src="./assets/medicare-logo.png" alt="Logo Medicare"></div>medicare</div>
+  <div class="visual-copy"><div class="eyebrow">Your health, organized</div><h1>Perawatan lebih teratur, dimulai dari satu janji.</h1><p>Kelola jadwal konsultasi, konfirmasi kunjungan, dan pantau riwayat pemeriksaan dalam satu aplikasi.</p>
+   <div class="visual-points"><div><span class="check">✓</span> Pengajuan janji temu lebih praktis</div><div><span class="check">✓</span> Status janji pasien dan dokter terhubung</div><div><span class="check">✓</span> Riwayat dan jadwal kontrol tersimpan rapi</div></div>
+  </div><div class="visual-foot">Medicare · Sistem Manajemen Janji Temu Medis</div>
+ </div>
+ <div class="login-side"><div class="login-card">
+  <div class="eyebrow">Selamat datang di Medicare</div><h2>Masuk ke akun</h2><p>Silakan login untuk melanjutkan ke layanan Medicare.</p>
+  <form id="loginForm">
+   <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" placeholder="nama@email.com" required></div>
+   <div class="field"><label for="loginPassword">Password</label><div class="password-wrap"><input id="loginPassword" type="password" placeholder="Masukkan password" required><button class="toggle-pass" type="button" onclick="togglePassword()">◉</button></div></div>
+   <div class="field"><label for="loginRole">Masuk sebagai</label><select id="loginRole"><option value="patient">Pasien</option><option value="doctor">Dokter</option></select></div>
+   <button class="btn primary full">Login</button><div id="loginError" class="error"></div>
+  </form>
+  <p style="text-align:center;font-size:13px;color:#718596;margin:20px 0 0">Belum punya akun? <button type="button" onclick="showRegister()" style="background:transparent;color:#2477b8;font-weight:800;padding:0">Daftar sekarang</button></p>
+ </div></div>
+</section>
+
+<section id="registerScreen" class="login-wrap hidden">
+ <div class="login-visual">
+  <div class="brand"><div class="logo"><img src="./assets/medicare-logo.png" alt="Logo Medicare"></div>medicare</div>
+  <div class="visual-copy"><div class="eyebrow">Join Medicare</div><h1>Mulai kelola kesehatan dengan lebih mudah.</h1><p>Buat akun untuk mengajukan janji temu, menerima konfirmasi, dan menyimpan riwayat kunjungan medis.</p>
+   <div class="visual-points"><div><span class="check">✓</span> Pendaftaran akun sederhana</div><div><span class="check">✓</span> Dashboard sesuai peran pengguna</div><div><span class="check">✓</span> Jadwal dan riwayat dalam satu tempat</div></div>
+  </div><div class="visual-foot">Medicare · Sistem Manajemen Janji Temu Medis</div>
+ </div>
+ <div class="login-side"><div class="login-card">
+  <div class="eyebrow">Bergabung dengan Medicare</div><h2>Buat akun baru</h2><p>Lengkapi data berikut untuk mulai menggunakan Medicare.</p>
+  <form id="registerForm">
+   <div class="field"><label for="regName">Nama lengkap</label><input id="regName" type="text" placeholder="Nama lengkap" required></div>
+   <div class="field"><label for="regEmail">Email</label><input id="regEmail" type="email" placeholder="nama@email.com" required></div>
+   <div class="field"><label for="regRole">Daftar sebagai</label><select id="regRole"><option value="patient">Pasien</option><option value="doctor">Dokter</option></select></div>
+   <div class="field"><label for="regPassword">Password</label><input id="regPassword" type="password" minlength="6" placeholder="Minimal 6 karakter" required></div>
+   <div class="field"><label for="regConfirm">Konfirmasi password</label><input id="regConfirm" type="password" minlength="6" placeholder="Ulangi password" required></div>
+   <button class="btn primary full">Daftar Akun</button><div id="registerError" class="error"></div>
+  </form>
+  <p style="text-align:center;font-size:13px;color:#718596;margin-top:20px">Sudah punya akun? <button type="button" onclick="showLogin()" style="background:transparent;color:#2477b8;font-weight:800;padding:0">Login</button></p>
+ </div></div>
+</section>
+
+<div id="appScreen" class="hidden">
+<header class="app-header"><div class="brand"><div class="logo"><img src="./assets/medicare-logo.png" alt="Logo Medicare"></div>medicare</div><div class="user-area"><div class="user-meta"><b id="headerName">Nama Pengguna</b><small id="headerRole">Pasien</small></div><div class="avatar" id="avatar">P</div><button class="logout" onclick="logout()">Keluar ↗</button></div></header>
+<main>
+ <section class="welcome"><div><div class="eyebrow">Dashboard Medicare</div><h1 id="greeting">Selamat datang 👋</h1><p id="subGreeting">Pantau jadwal dan kunjungan medis.</p></div><button id="mainAction" class="btn primary" onclick="openBooking()">＋ Buat Janji Temu</button></section>
+ <section class="stats">
+  <div class="stat"><div class="stat-head"><span id="statOneLabel">Total Janji Temu</span><span class="stat-icon">▣</span></div><strong id="statOne">0</strong></div>
+  <div class="stat"><div class="stat-head"><span>Menunggu Konfirmasi</span><span class="stat-icon">◷</span></div><strong id="statTwo">0</strong></div>
+  <div class="stat"><div class="stat-head"><span id="statThreeLabel">Jadwal Diterima</span><span class="stat-icon">✓</span></div><strong id="statThree">0</strong></div>
+ </section>
+ <section class="content-grid">
+  <div>
+   <div class="panel" id="appointmentsPanel"><div class="panel-title"><h2 id="listTitle">Jadwal Saya</h2><span class="muted" id="listCount"></span></div><div id="appointmentList"></div></div>
+   <div class="panel" id="historyPanel"><div class="panel-title"><h2>Riwayat Kunjungan & Catatan</h2><span class="muted">Rekam kunjungan</span></div><div id="historyList"></div></div>
+  </div>
+  <aside>
+   <div class="panel"><div class="panel-title"><h2>Akses Cepat</h2></div><div class="quick" id="quickActions">
+    <button onclick="openBooking()"><span>＋</span>Buat janji<small>Ajukan kunjungan</small></button><button onclick="scrollToPanel('calendarPanel')"><span>▦</span>Kalender<small>Lihat jadwal</small></button>
+    <button onclick="scrollToPanel('historyPanel')"><span>▤</span>Riwayat<small>Catatan dokter</small></button><button onclick="calendarInfo()"><span>↗</span>Google Calendar<small>Info sinkronisasi</small></button><button onclick="scrollToPanel('doctorSearchPanel')"><span>🩺</span>Cari dokter<small>Spesialisasi</small></button><button onclick="scrollToPanel('notificationsPanel')"><span>🔔</span>Notifikasi<small>Pembaruan jadwal</small></button>
+   </div></div>
+   <div class="panel" id="calendarPanel"><div class="panel-title"><h2>Kalender Kunjungan</h2><div class="calendar-toolbar"><button class="calendar-nav" type="button" onclick="changeCalendarMonth(-1)" aria-label="Bulan sebelumnya">‹</button><span class="muted" id="monthLabel"></span><button class="calendar-nav" type="button" onclick="changeCalendarMonth(1)" aria-label="Bulan berikutnya">›</button></div></div><div class="calendar" id="calendarGrid"></div><div class="calendar-detail" id="calendarDetail"><h3>Pilih tanggal untuk melihat jadwal</h3><div class="muted">Tekan salah satu tanggal pada kalender.</div></div><div class="notice">Titik biru menandakan ada janji temu yang sudah diterima. Pilih tanggal untuk melihat detail jadwal.</div></div>
+   <div class="panel"><div class="panel-title"><h2>Alur Medicare</h2></div><div class="muted" style="line-height:1.9">1. Pasien mengajukan janji temu<br>2. Dokter menerima atau menolak<br>3. Jadwal dikonfirmasi<br>4. Pasien melakukan kunjungan<br>5. Dokter mengisi catatan<br>6. Kontrol berikutnya dijadwalkan</div></div>
+  </aside>
+ </section>
+ <section class="feature-grid" aria-label="Fitur tambahan Medicare">
+  <div class="feature-panel" id="doctorSearchPanel"><div class="panel-title"><h2>🔎 Cari Dokter</h2><span class="muted">Direktori Medicare</span></div>
+   <div class="search-row"><input id="doctorSearchInput" type="search" placeholder="Nama dokter atau spesialisasi..."><button class="btn soft" onclick="renderDoctorSearch()">Cari</button></div>
+   <div id="doctorSearchResults"></div><div class="feature-note">Direktori dokter pada versi demo ini menggunakan data contoh.</div>
+  </div>
+  <div class="feature-panel" id="notificationsPanel"><div class="panel-title"><h2>🔔 Notifikasi</h2><button class="btn outline" onclick="clearNotifications()">Bersihkan</button></div><div id="notificationList"></div><div class="feature-note">Notifikasi tersimpan pada perangkat ini. Push notification saat aplikasi tertutup memerlukan integrasi backend/push service.</div></div>
+  <div class="feature-panel" id="medicalRecordsPanel"><div class="panel-title"><h2>📋 Rekam Medis Digital</h2><span class="muted">Riwayat pemeriksaan</span></div><div id="medicalRecordsList"></div><div class="feature-note">Data rekam medis demo disimpan lokal di perangkat. Jangan gunakan data pasien nyata sebelum sistem keamanan dan server medis disiapkan.</div></div>
+  <div class="feature-panel" id="chatPanel"><div class="panel-title"><h2>💬 Chat Dokter</h2><span class="muted">Pesan lokal</span></div>
+   <div class="field" style="margin-bottom:9px"><label for="chatDoctorSelect">Pilih percakapan</label><select id="chatDoctorSelect" onchange="renderChat()"></select></div>
+   <div id="chatMessages" class="chat-box"></div>
+   <form id="chatForm" class="chat-compose"><input id="chatMessageInput" placeholder="Tulis pesan..." maxlength="500" required><button class="btn primary">Kirim</button></form>
+   <div class="feature-note">Chat pada versi ini adalah simulasi lokal. Pesan belum dikirim ke perangkat dokter lain.</div>
+  </div>
+ </section>
+</main><footer>Medicare · Prototype Tugas Besar Sistem Multimedia</footer>
+</div>
+
+<div class="modal-backdrop" id="bookingModal"><div class="modal">
+ <div class="modal-head"><h2>Ajukan Janji Temu</h2><button class="close" onclick="closeModal('bookingModal')">×</button></div>
+ <form id="bookingForm">
+  <div class="field"><label>Nama pasien</label><input id="patientName" required placeholder="Nama lengkap pasien"></div>
+  <div class="field"><label>Pilih dokter</label><select id="doctorName" required><option value="">Pilih dokter</option><option>dr. Andi Pratama — Umum</option><option>dr. Siti Rahma — Anak</option><option>dr. Budi Santoso — Jantung</option><option>dr. Maya Putri — Kulit</option></select></div>
+  <div class="form-grid"><div class="field"><label>Tanggal kunjungan</label><input type="date" id="appointmentDate" required></div><div class="field"><label>Jam kunjungan</label><select id="appointmentTime" required><option value="">Pilih jam</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>13:00</option><option>14:00</option><option>15:00</option></select></div></div>
+  <div class="field"><label>Keluhan atau tujuan kunjungan</label><textarea id="complaint" placeholder="Tuliskan keluhan singkat (opsional)"></textarea></div>
+  <button class="btn primary full">Kirim Permintaan Janji</button><div class="notice">Status awal permintaan adalah <b>Menunggu Konfirmasi</b>.</div>
+ </form>
+</div></div>
+
+<div class="modal-backdrop" id="noteModal"><div class="modal">
+ <div class="modal-head"><h2>Catatan Pemeriksaan</h2><button class="close" onclick="closeModal('noteModal')">×</button></div>
+ <form id="noteForm"><input type="hidden" id="noteId">
+  <div class="field"><label>Hasil pemeriksaan / catatan dokter</label><textarea id="doctorNote" required placeholder="Masukkan hasil pemeriksaan dan saran dokter..."></textarea></div>
+  <div class="field"><label>Tanggal kontrol berikutnya (opsional)</label><input type="date" id="followDate"></div>
+  <div class="field"><label>Jam kontrol berikutnya (opsional)</label><input type="time" id="followTime"></div>
+  <button class="btn primary full">Simpan Catatan & Selesaikan Kunjungan</button>
+ </form>
+</div></div>
+
+
+<div class="modal-backdrop" id="rescheduleModal"><div class="modal">
+ <div class="modal-head"><h2>Ubah Jadwal Janji Temu</h2><button class="close" onclick="closeModal('rescheduleModal')">×</button></div>
+ <form id="rescheduleForm">
+  <input type="hidden" id="rescheduleId">
+  <div class="form-grid">
+   <div class="field"><label for="rescheduleDate">Tanggal baru</label><input type="date" id="rescheduleDate" required></div>
+   <div class="field"><label for="rescheduleTime">Jam baru</label><select id="rescheduleTime" required><option value="">Pilih jam</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>13:00</option><option>14:00</option><option>15:00</option></select></div>
+  </div>
+  <p class="reschedule-hint">Untuk prototype mata kuliah, perubahan jadwal langsung disimpan. Jika janji sudah diterima, pengingat lama akan diganti dengan pengingat baru.</p>
+  <button class="btn primary full">Simpan Perubahan Jadwal</button>
+  <div id="rescheduleError" class="error"></div>
+ </form>
+</div></div>
+
+<script>
+let LocalNotifications = null;
+window.addEventListener("medicare-local-notifications-ready", () => {
+  LocalNotifications = window.MedicareLocalNotifications || null;
+});
+const $=id=>document.getElementById(id);
+let currentUser=null,role="patient";
+const demo={
+ patient:{email:"pasien@medicare.test",password:"pasien123",name:"Nadia Putri",role:"patient"},
+ doctor:{email:"dokter@medicare.test",password:"dokter123",name:"dr. Andi Pratama",role:"doctor"}
+};
+let registeredUsers=JSON.parse(localStorage.getItem("medicareUsers")||"[]");
+function showRegister(){$("loginScreen").classList.add("hidden");$("registerScreen").classList.remove("hidden");$("registerError").textContent=""}
+function showLogin(){$("registerScreen").classList.add("hidden");$("loginScreen").classList.remove("hidden");$("loginError").textContent=""}
+function saveUsers(){localStorage.setItem("medicareUsers",JSON.stringify(registeredUsers))}
+
+function dateAfter(days){let d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+let appointments=JSON.parse(localStorage.getItem("medicareAppointments")||"null")||[
+ {id:101,patient:"Nadia Putri",patientEmail:demo.patient.email,doctor:"dr. Andi Pratama — Umum",date:dateAfter(2),time:"09:00",status:"accepted",complaint:"Kontrol kesehatan rutin",note:"Kondisi pasien stabil. Disarankan menjaga pola istirahat dan pola makan.",followDate:"",followTime:""},
+ {id:102,patient:"Nadia Putri",patientEmail:demo.patient.email,doctor:"dr. Siti Rahma — Anak",date:dateAfter(5),time:"10:00",status:"pending",complaint:"Konsultasi kesehatan",note:""},
+ {id:103,patient:"Rizky Ramadhan",patientEmail:"rizky@example.test",doctor:"dr. Andi Pratama — Umum",date:dateAfter(1),time:"13:00",status:"pending",complaint:"Pemeriksaan umum",note:""}
+];
+function togglePassword(){let p=$("loginPassword");p.type=p.type==="password"?"text":"password"}
+$("loginForm").addEventListener("submit",e=>{
+ e.preventDefault();let email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value,selected=$("loginRole").value,account=demo[selected];
+ let custom=registeredUsers.find(u=>u.email===email&&u.password===password&&u.role===selected);
+ if(custom) account=custom;
+ else if(email!==account.email||password!==account.password){$("loginError").textContent="Email, password, atau peran akun tidak sesuai.";return}
+ currentUser=account;role=selected;$("loginError").textContent="";$("loginScreen").classList.add("hidden");$("appScreen").classList.remove("hidden");$("headerName").textContent=account.name;$("headerRole").textContent=role==="doctor"?"Dokter":"Pasien";$("avatar").textContent=role==="doctor"?"D":"P";render();
+});
+$("registerForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("regName").value.trim(),email=$("regEmail").value.trim().toLowerCase(),roleChoice=$("regRole").value,password=$("regPassword").value,confirmPassword=$("regConfirm").value;
+ if(password.length<6){$("registerError").textContent="Password minimal 6 karakter.";return}
+ if(password!==confirmPassword){$("registerError").textContent="Konfirmasi password tidak sama.";return}
+ if(Object.values(demo).some(u=>u.email===email)||registeredUsers.some(u=>u.email===email)){ $("registerError").textContent="Email sudah terdaftar. Silakan login.";return}
+ const newUser={name,email,password,role:roleChoice};
+ registeredUsers.push(newUser);saveUsers();
+ $("registerForm").reset();$("loginEmail").value=email;$("loginPassword").value="";$("loginRole").value=roleChoice;
+ alert("Pendaftaran berhasil. Silakan login menggunakan akun baru.");
+ showLogin();
+});
+function logout(){currentUser=null;$("appScreen").classList.add("hidden");$("loginScreen").classList.remove("hidden");$("loginPassword").value=""}
+function statusText(s){return {pending:"Menunggu konfirmasi",accepted:"Diterima",rejected:"Ditolak",completed:"Selesai"}[s]||s}
+function prettyDate(s){if(!s)return"—";return new Date(s+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"})}
+function visibleAppointments(){return role==="doctor"?appointments:appointments.filter(a=>a.patientEmail===currentUser.email)}
+function render(){
+ let list=visibleAppointments(),pending=list.filter(a=>a.status==="pending").length,third=list.filter(a=>a.status===(role==="doctor"?"completed":"accepted")).length;
+ $("greeting").textContent=role==="doctor"?"Selamat datang, Dokter 👋":"Selamat datang, "+currentUser.name+" 👋";
+ $("subGreeting").textContent=role==="doctor"?"Tinjau permintaan janji, kelola kunjungan, dan catat pemeriksaan pasien.":"Ajukan janji temu, pantau konfirmasi dokter, dan lihat riwayat pemeriksaanmu.";
+ $("mainAction").classList.toggle("hidden",role==="doctor");
+ $("statOneLabel").textContent=role==="doctor"?"Total Permintaan":"Total Janji Temu";$("statOne").textContent=list.length;$("statTwo").textContent=pending;$("statThreeLabel").textContent=role==="doctor"?"Kunjungan Selesai":"Jadwal Diterima";$("statThree").textContent=third;
+ $("listTitle").textContent=role==="doctor"?"Permintaan & Jadwal Pasien":"Jadwal Saya";$("listCount").textContent=list.length+" janji temu";
+ $("appointmentList").innerHTML=list.length?list.map(a=>`<div class="appointment"><div class="appt-left"><div class="doc-icon">🩺</div><div><div class="appt-name">${role==="doctor"?a.patient:a.doctor}</div><div class="appt-meta">${prettyDate(a.date)} · ${a.time}<br>${a.complaint||"Kunjungan medis"}</div><span class="status ${a.status}">${statusText(a.status)}</span></div></div><div class="row-actions">${actionsFor(a)}</div></div>`).join(""):'<div class="empty">Belum ada janji temu. Silakan buat janji baru.</div>';
+ renderHistory();renderCalendar();
+}
+function actionsFor(a){
+ if(role==="doctor"){
+  if(a.status==="pending")return `<button class="btn success" onclick="decide(${a.id},'accepted')">Terima</button><button class="btn danger" onclick="decide(${a.id},'rejected')">Tolak</button>`;
+  if(a.status==="accepted")return `<button class="btn primary" onclick="openNote(${a.id})">Isi catatan / Selesaikan</button>`;
+  if(a.status==="completed")return `<button class="btn soft" onclick="viewNote(${a.id})">Lihat catatan</button>`;
+  return "";
+ }
+ if(a.status==="pending"||a.status==="accepted")return `<button class="btn soft" onclick="openReschedule(${a.id})">Ubah Jadwal</button><button class="btn outline" onclick="cancelAppointment(${a.id})">Batalkan</button>`;
+ if(a.status==="completed")return `<button class="btn soft" onclick="viewNote(${a.id})">Lihat catatan</button>`;
+ return "";
+}
+function decide(id,status){let a=appointments.find(x=>x.id===id);a.status=status;render();alert(status==="accepted"?"Janji temu diterima. Pasien dapat melihat status yang diperbarui. Jadwal siap disinkronkan ke Google Calendar (simulasi).":"Permintaan janji temu ditolak. Status pasien telah diperbarui.")}
+function cancelAppointment(id){if(confirm("Yakin ingin membatalkan janji temu?")){appointments=appointments.filter(a=>a.id!==id);render()}}
+function openBooking(){$("bookingModal").classList.add("show");$("patientName").value=currentUser.name;$("appointmentDate").min=dateAfter(0)}
+function closeModal(id){$(id).classList.remove("show")}
+$("bookingForm").addEventListener("submit",e=>{e.preventDefault();appointments.unshift({id:Date.now(),patient:$("patientName").value,patientEmail:currentUser.email,doctor:$("doctorName").value,date:$("appointmentDate").value,time:$("appointmentTime").value,status:"pending",complaint:$("complaint").value,note:""});closeModal("bookingModal");e.target.reset();render();alert("Permintaan berhasil dikirim. Status: Menunggu Konfirmasi.")});
+function openNote(id){let a=appointments.find(x=>x.id===id);$("noteId").value=id;$("doctorNote").value=a.note||"";$("followDate").value="";$("followTime").value="";$("followDate").min=dateAfter(0);$("noteModal").classList.add("show")}
+$("noteForm").addEventListener("submit",e=>{e.preventDefault();let a=appointments.find(x=>x.id==$("noteId").value);a.note=$("doctorNote").value;a.followDate=$("followDate").value;a.followTime=$("followTime").value;a.status="completed";if(a.followDate){appointments.push({id:Date.now(),patient:a.patient,patientEmail:a.patientEmail,doctor:a.doctor,date:a.followDate,time:a.followTime||"09:00",status:"accepted",complaint:"Kontrol lanjutan",note:""})}closeModal("noteModal");e.target.reset();render();alert("Catatan pemeriksaan tersimpan. Kunjungan ditandai selesai." )});
+function renderHistory(){let done=visibleAppointments().filter(a=>a.status==="completed");$("historyList").innerHTML=done.length?done.map(a=>`<div class="history-item"><strong>${role==="doctor"?a.patient:a.doctor} · ${prettyDate(a.date)}</strong><p>${a.note||"Belum ada catatan."}</p>${a.followDate?`<p>Kontrol berikutnya: ${prettyDate(a.followDate)} · ${a.followTime||"09:00"}</p>`:""}</div>`).join(""):'<div class="empty">Riwayat kunjungan akan muncul setelah dokter menyelesaikan pemeriksaan.</div>'}
+let calendarViewDate = new Date();
+let selectedCalendarDate = "";
+function changeCalendarMonth(offset){
+ calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth()+offset, 1);
+ renderCalendar();
+}
+function selectCalendarDate(iso){
+ selectedCalendarDate = iso;
+ renderCalendar();
+}
+function renderCalendar(){
+ const now=new Date(),year=calendarViewDate.getFullYear(),month=calendarViewDate.getMonth();
+ const first=new Date(year,month,1).getDay(),days=new Date(year,month+1,0).getDate();
+ $("monthLabel").textContent=calendarViewDate.toLocaleDateString("id-ID",{month:"long",year:"numeric"});
+ let html=["Min","Sen","Sel","Rab","Kam","Jum","Sab"].map(x=>`<div class="day">${x}</div>`).join("");
+ for(let i=0;i<first;i++)html+="<div></div>";
+ for(let day=1;day<=days;day++){
+  const iso=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+  const dayAppointments=visibleAppointments().filter(a=>a.date===iso&&a.status!=="rejected");
+  const has=dayAppointments.some(a=>a.status==="accepted");
+  const todayIso=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+  const classes=["calendar-date"];
+  if(iso===todayIso)classes.push("today");
+  if(has)classes.push("has");
+  if(selectedCalendarDate===iso)classes.push("selected");
+  html+=`<button type="button" class="${classes.join(" ")}" onclick="selectCalendarDate('${iso}')" aria-label="Lihat jadwal tanggal ${day}">${day}</button>`;
+ }
+ $("calendarGrid").innerHTML=html;
+ if(selectedCalendarDate){
+  const selectedAppointments=visibleAppointments().filter(a=>a.date===selectedCalendarDate&&a.status!=="rejected");
+  $("calendarDetail").innerHTML=`<h3>Jadwal ${prettyDate(selectedCalendarDate)}</h3>`+
+   (selectedAppointments.length?selectedAppointments.map(a=>`<div class="calendar-event"><b>${safeText(a.time||"Waktu belum ditentukan")} · ${safeText(role==="doctor"?a.patient:a.doctor)}</b>${safeText(statusText(a.status))}${a.complaint?`<br>${safeText(a.complaint)}`:""}</div>`).join(""):'<div class="muted">Tidak ada janji temu pada tanggal ini.</div>');
+ }else{
+  $("calendarDetail").innerHTML='<h3>Pilih tanggal untuk melihat jadwal</h3><div class="muted">Tekan salah satu tanggal pada kalender.</div>';
+ }
+}
+function scrollToPanel(id){$(id).scrollIntoView({behavior:"smooth",block:"center"})}
+function calendarInfo(){alert("Dalam prototype, jadwal berstatus Diterima ditampilkan pada kalender Medicare. Sinkronisasi Google Calendar sungguhan memerlukan Google OAuth dan Calendar API, sehingga belum aktif di versi demonstrasi ini.")}
+function viewNote(id){let a=appointments.find(x=>x.id===id);alert("Catatan pemeriksaan:\n"+(a.note||"Belum ada catatan.")+(a.followDate?"\nKontrol berikutnya: "+prettyDate(a.followDate)+" "+(a.followTime||""):""))}
+
+
+/* ===== Fitur tambahan Medicare: direktori dokter, notifikasi, rekam medis, chat ===== */
+const medicareDoctors=[
+ {name:"dr. Andi Pratama",specialty:"Dokter Umum",value:"dr. Andi Pratama — Umum",availability:"Senin–Jumat · 08.00–15.00"},
+ {name:"dr. Siti Rahma",specialty:"Dokter Anak",value:"dr. Siti Rahma — Anak",availability:"Senin–Sabtu · 09.00–14.00"},
+ {name:"dr. Budi Santoso",specialty:"Spesialis Jantung",value:"dr. Budi Santoso — Jantung",availability:"Selasa–Jumat · 10.00–15.00"},
+ {name:"dr. Maya Putri",specialty:"Spesialis Kulit",value:"dr. Maya Putri — Kulit",availability:"Senin–Kamis · 08.00–13.00"}
+];
+let medicareNotifications=JSON.parse(localStorage.getItem("medicareNotifications")||"[]");
+let medicareChats=JSON.parse(localStorage.getItem("medicareChats")||"{}");
+function persistAppointments(){localStorage.setItem("medicareAppointments",JSON.stringify(appointments))}
+function persistNotifications(){localStorage.setItem("medicareNotifications",JSON.stringify(medicareNotifications))}
+function persistChats(){localStorage.setItem("medicareChats",JSON.stringify(medicareChats))}
+function safeText(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function addNotification(message,owner=currentUser?.email||"all"){medicareNotifications.unshift({id:Date.now()+Math.random(),message,createdAt:new Date().toISOString(),owner});medicareNotifications=medicareNotifications.slice(0,40);persistNotifications();renderNotifications()}
+function renderNotifications(){let list=medicareNotifications.filter(n=>n.owner===currentUser?.email||n.owner==="all");$("notificationList").innerHTML=list.length?list.map(n=>`<div class="notification-item"><span class="notification-dot"></span><div><p>${safeText(n.message)}</p><small>${new Date(n.createdAt).toLocaleString("id-ID")}</small></div></div>`).join(""):'<div class="feature-empty">Belum ada notifikasi.</div>'}
+function clearNotifications(){medicareNotifications=medicareNotifications.filter(n=>n.owner!==currentUser?.email&&n.owner!=="all");persistNotifications();renderNotifications()}
+function renderDoctorSearch(){let q=( $("doctorSearchInput")?.value||"").trim().toLowerCase();let found=medicareDoctors.filter(d=>(d.name+" "+d.specialty).toLowerCase().includes(q));$("doctorSearchResults").innerHTML=found.length?found.map(d=>`<div class="doctor-card"><div class="doctor-info"><div class="doctor-avatar">🩺</div><div><b>${safeText(d.name)}</b><small>${safeText(d.specialty)}<br>${safeText(d.availability)}</small></div></div><button class="btn soft" onclick="bookWithDoctor('${d.value.replace(/'/g,"\\'")}')">Pilih</button></div>`).join(""):'<div class="feature-empty">Dokter tidak ditemukan. Coba kata kunci lain.</div>'}
+function bookWithDoctor(value){if(role!=="patient"){alert("Pemesanan janji temu hanya tersedia untuk akun pasien.");return}openBooking();$("doctorName").value=value}
+function renderMedicalRecords(){let records=visibleAppointments().filter(a=>a.status==="completed"&&a.note);$("medicalRecordsList").innerHTML=records.length?records.map(a=>`<div class="record-card"><b>${safeText(a.doctor)} · ${prettyDate(a.date)}</b><small>${safeText(a.complaint||"Pemeriksaan")}</small><p style="font-size:12px;line-height:1.55;margin:8px 0">${safeText(a.note)}</p>${a.followDate?`<small>Kontrol berikutnya: ${prettyDate(a.followDate)} · ${safeText(a.followTime||"09:00")}</small>`:""}<div class="feature-actions" style="margin-top:9px"><button class="btn outline" onclick="downloadMedicalRecord(${a.id})">Unduh catatan (.txt)</button></div></div>`).join(""):'<div class="feature-empty">Belum ada rekam medis selesai. Catatan dokter akan tampil di sini.</div>'}
+function downloadMedicalRecord(id){let a=appointments.find(x=>x.id===id);if(!a)return;let content=`MEDICARE - CATATAN PEMERIKSAAN\nPasien: ${a.patient}\nDokter: ${a.doctor}\nTanggal: ${prettyDate(a.date)}\nKeluhan: ${a.complaint||"-"}\nCatatan: ${a.note||"-"}\nKontrol berikutnya: ${a.followDate?prettyDate(a.followDate)+" "+(a.followTime||""):"-"}\n\nCatatan ini berasal dari prototype Medicare.`;let blob=new Blob([content],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download=`rekam-medis-${a.id}.txt`;link.click();URL.revokeObjectURL(url)}
+function currentChatThreadKey(){let selected=$("chatDoctorSelect").value;if(role==="patient")return `${currentUser.email}|${selected}`;let appt=appointments.find(a=>a.patientEmail===selected&&(a.doctor||"").toLowerCase().includes((currentUser.name||"").toLowerCase().replace("dr. ","")));let doctorValue=appt?.doctor||medicareDoctors.find(d=>d.name.toLowerCase()===((currentUser.name||"").toLowerCase()))?.value||"doctor";return `${selected}|${doctorValue}`}
+function renderChat(){let select=$("chatDoctorSelect");if(!select||!currentUser)return;let selected=select.value;let relevant=visibleAppointments();let counterparties=role==="doctor"?[...new Map(relevant.map(a=>[a.patientEmail,{email:a.patientEmail,label:a.patient}])).values()]:medicareDoctors.map(d=>({email:d.value,label:d.name}));if(!counterparties.length)counterparties=[{email:"general",label:"Layanan Medicare"}];select.innerHTML=counterparties.map(c=>`<option value="${safeText(c.email)}">${safeText(c.label)}</option>`).join("");if(counterparties.some(c=>c.email===selected))select.value=selected;let key=currentChatThreadKey(),thread=medicareChats[key]||[];$("chatMessages").innerHTML=thread.length?thread.map(m=>`<div class="chat-bubble ${m.sender===currentUser.email?"mine":""}">${safeText(m.text)}<small>${safeText(m.senderName)} · ${new Date(m.time).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})}</small></div>`).join(""):'<div class="feature-empty">Belum ada pesan. Mulai percakapan dengan menulis pesan di bawah.</div>';$("chatMessages").scrollTop=$("chatMessages").scrollHeight}
+$("chatForm").addEventListener("submit",e=>{e.preventDefault();let text=$("chatMessageInput").value.trim(),key=currentChatThreadKey();if(!text||!key)return;(medicareChats[key]??=[]).push({text,sender:currentUser.email,senderName:currentUser.name,time:new Date().toISOString()});persistChats();$("chatMessageInput").value="";renderChat();});
+function renderAddedFeatures(){renderDoctorSearch();renderNotifications();renderMedicalRecords();renderChat()}
+// Keep original workflows intact while saving their changes and creating in-app notifications.
+const originalRender=render;
+render=function(){originalRender();if(currentUser)renderAddedFeatures()};
+const originalDecide=decide;
+decide=function(id,status){let a=appointments.find(x=>x.id===id);originalDecide(id,status);persistAppointments();if(a)addNotification(`Status janji temu ${prettyDate(a.date)} pukul ${a.time} dengan ${a.doctor} berubah menjadi: ${statusText(status)}.`,a.patientEmail)};
+cancelAppointment=function(id){let a=appointments.find(x=>x.id===id);if(!a)return;if(confirm("Yakin ingin membatalkan janji temu?")){appointments=appointments.filter(x=>x.id!==id);persistAppointments();render();addNotification(`Janji temu dengan ${a.doctor} pada ${prettyDate(a.date)} dibatalkan.`,a.patientEmail)}};
+$("bookingForm").addEventListener("submit",()=>{setTimeout(()=>{persistAppointments();addNotification("Permintaan janji temu berhasil dikirim dan menunggu konfirmasi dokter.")},0)});
+$("noteForm").addEventListener("submit",()=>{let targetId=$("noteId").value;setTimeout(()=>{persistAppointments();renderMedicalRecords();addNotification("Catatan pemeriksaan berhasil disimpan.",appointments.find(a=>a.id==targetId)?.patientEmail||currentUser.email)},0)});
+
+
+// ===== Lanjutan Medicare: ubah jadwal + notifikasi pengingat Android =====
+const reminderOffsets = [
+  { minutes: 1440, label: "1 hari sebelum janji temu" },
+  { minutes: 180, label: "3 jam sebelum janji temu" },
+  { minutes: 30, label: "30 menit sebelum janji temu" }
+];
+
+function reminderNotificationId(appointmentId, offset) {
+  const raw = `${appointmentId}-${offset}`;
+  let hash = 0;
+  for (let i = 0; i < raw.length; i++) hash = (hash * 31 + raw.charCodeAt(i)) | 0;
+  return (Math.abs(hash) % 2000000000) + 1;
+}
+
+async function ensureNotificationPermission() {
+  let permission = await LocalNotifications.checkPermissions();
+  if (permission.display !== "granted") permission = await LocalNotifications.requestPermissions();
+  return permission.display === "granted";
+}
+
+async function cancelNativeReminders(appointmentId) {
+  const notifications = reminderOffsets.map(item => ({
+    id: reminderNotificationId(appointmentId, item.minutes)
+  }));
+  try {
+    await LocalNotifications.cancel({ notifications });
+  } catch (error) {
+    console.warn("Pengingat lama tidak dapat dibatalkan:", error);
+  }
+}
+
+async function scheduleNativeReminders(appointment) {
+  if (!appointment || appointment.status !== "accepted") return;
+  const appointmentDateTime = new Date(`${appointment.date}T${appointment.time}:00`);
+  if (Number.isNaN(appointmentDateTime.getTime()) || appointmentDateTime <= new Date()) return;
+
+  const allowed = await ensureNotificationPermission();
+  if (!allowed) {
+    addNotification("Izin notifikasi belum diberikan. Aktifkan izin notifikasi Medicare di pengaturan Android.", appointment.patientEmail);
+    return;
+  }
+
+  await cancelNativeReminders(appointment.id);
+  const notifications = reminderOffsets.map(item => ({
+    id: reminderNotificationId(appointment.id, item.minutes),
+    title: "Pengingat Janji Temu Medicare",
+    body: `${item.label}. Jadwal dengan ${appointment.doctor} pukul ${appointment.time}.`,
+    schedule: { at: new Date(appointmentDateTime.getTime() - item.minutes * 60000) },
+    extra: { appointmentId: String(appointment.id) }
+  })).filter(item => item.schedule.at > new Date());
+
+  if (notifications.length) await LocalNotifications.schedule({ notifications });
+}
+
+function openReschedule(id) {
+  const appointment = appointments.find(item => String(item.id) === String(id));
+  if (!appointment) return;
+  $("rescheduleId").value = appointment.id;
+  $("rescheduleDate").value = appointment.date;
+  $("rescheduleTime").value = appointment.time;
+  $("rescheduleDate").min = dateAfter(0);
+  $("rescheduleError").textContent = "";
+  $("rescheduleModal").classList.add("show");
+}
+
+$("rescheduleForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const id = $("rescheduleId").value;
+  const appointment = appointments.find(item => String(item.id) === String(id));
+  if (!appointment) {
+    $("rescheduleError").textContent = "Janji temu tidak ditemukan.";
+    return;
+  }
+
+  const newDate = $("rescheduleDate").value;
+  const newTime = $("rescheduleTime").value;
+  const newDateTime = new Date(`${newDate}T${newTime}:00`);
+  if (!newDate || !newTime || Number.isNaN(newDateTime.getTime()) || newDateTime <= new Date()) {
+    $("rescheduleError").textContent = "Pilih tanggal dan jam yang masih akan datang.";
+    return;
+  }
+
+  const collision = appointments.some(item =>
+    String(item.id) !== String(id) &&
+    item.doctor === appointment.doctor &&
+    item.date === newDate &&
+    item.time === newTime &&
+    item.status === "accepted"
+  );
+  if (collision) {
+    $("rescheduleError").textContent = "Dokter sudah memiliki jadwal diterima pada waktu tersebut.";
+    return;
+  }
+
+  const previousDate = appointment.date;
+  const previousTime = appointment.time;
+  await cancelNativeReminders(appointment.id);
+
+  appointment.date = newDate;
+  appointment.time = newTime;
+  appointment.updatedAt = new Date().toISOString();
+
+  persistAppointments();
+  closeModal("rescheduleModal");
+  render();
+
+  addNotification(
+    `Jadwal janji temu dengan ${appointment.doctor} diubah dari ${prettyDate(previousDate)} ${previousTime} menjadi ${prettyDate(newDate)} ${newTime}.`,
+    appointment.patientEmail
+  );
+
+  if (appointment.status === "accepted") {
+    try {
+      await scheduleNativeReminders(appointment);
+      addNotification("Pengingat baru telah dijadwalkan untuk janji temu Anda.", appointment.patientEmail);
+    } catch (error) {
+      console.error(error);
+      addNotification("Jadwal berhasil diubah, tetapi pengingat Android gagal dibuat. Periksa izin notifikasi.", appointment.patientEmail);
+    }
+  }
+});
+
+const previousDecisionWithReminder = decide;
+decide = function(id, status) {
+  previousDecisionWithReminder(id, status);
+  const appointment = appointments.find(item => String(item.id) === String(id));
+  if (appointment && status === "accepted") {
+    scheduleNativeReminders(appointment).then(() => {
+      addNotification("Pengingat janji temu telah diatur: 1 hari, 3 jam, dan 30 menit sebelumnya.", appointment.patientEmail);
+    }).catch(error => {
+      console.error("Gagal menjadwalkan pengingat:", error);
+      addNotification("Janji temu diterima, tetapi pengingat belum berhasil dibuat. Periksa izin notifikasi.", appointment.patientEmail);
+    });
+  }
+};
+
+const renderBeforeReminderRestore = render;
+render = function() {
+  renderBeforeReminderRestore();
+  if (currentUser && role === "patient") {
+    visibleAppointments().filter(item => item.status === "accepted").forEach(item => {
+      scheduleNativeReminders(item).catch(error => console.warn(error));
+    });
+  }
+};
+
+</script>
+
+<script type="module">
+import { LocalNotifications } from "@capacitor/local-notifications";
+window.MedicareLocalNotifications = LocalNotifications;
+window.dispatchEvent(new Event("medicare-local-notifications-ready"));
+</script>
+
+</body></html>
