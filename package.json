@@ -1,0 +1,23 @@
+{
+  "name": "medicare-android",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Medicare appointment management Android app",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "sync:android": "npm run build && npx cap sync android",
+    "open:android": "npx cap open android",
+    "build:android": "npm run build && npx cap sync android && npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/local-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "typescript": "^7.0.2",
+    "vite": "^6.0.0"
+  }
+}
